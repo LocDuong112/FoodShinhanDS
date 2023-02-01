@@ -32,9 +32,6 @@ public class ProductCartPK implements Serializable {
 
     @Override
     public String toString() {
-        return "ProductCartPK{" +
-                "productId=" + productId +
-                ", cartId=" + cartId +
-                '}';
+        return "ProductCartPK{" + "productId=" + productId + ", cartId=" + cartId + '}';
     }
 }

@@ -14,7 +14,7 @@ import java.util.Objects;
 public class OrderDetailPK implements Serializable {
     @Column(name = "product_id", nullable = false)
     private Long productId;
-    @Column(name = "order_id",nullable = false)
+    @Column(name = "order_id", nullable = false)
     private Long orderId;
 
     @Override

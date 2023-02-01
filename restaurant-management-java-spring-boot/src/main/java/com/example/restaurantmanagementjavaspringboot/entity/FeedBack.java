@@ -1,12 +1,16 @@
 package com.example.restaurantmanagementjavaspringboot.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "feedback")
 public class FeedBack {
@@ -16,15 +20,20 @@ public class FeedBack {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id",updatable = false,insertable = false)
+    @JoinColumn(name = "account_id", updatable = false, insertable = false)
     private Account account;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", insertable = false,updatable = false)
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Products products;
 
     private int rating;
-    private String comment;
+
+    // The column name "comment" cannot be created because comment is a function in Oracle
+    @Column(name = "customer_comment")
+    private String customerComment;
+
+    @Column(name = "latest_date")
     private String latestDate;
 
 }

@@ -1,14 +1,17 @@
 package com.example.restaurantmanagementjavaspringboot.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Time;
-import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "discounts")
 public class Discounts {
@@ -18,11 +21,15 @@ public class Discounts {
     private Long id;
 
     private String note;
-    private Time startDate;
-    private Time endDate;
     private double price;
 
+    @Column(name = "start_date")
+    private Time startDate;
+
+    @Column(name = "end_date")
+    private Time endDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "products_id", insertable = false,updatable = false)
+    @JoinColumn(name = "products_id", insertable = false, updatable = false)
     private Products products;
 }
