@@ -42,8 +42,10 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private Set<FeedBack> feedBacks;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", insertable = false, updatable = false)
+    @OneToMany(mappedBy = "account")
+    private Set<Order> orders;
+
+    @OneToOne(mappedBy = "account")
     private Role role;
 
 
