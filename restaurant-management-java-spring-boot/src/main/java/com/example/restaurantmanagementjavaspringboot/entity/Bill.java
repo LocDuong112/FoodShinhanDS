@@ -28,8 +28,5 @@ public class Bill {
     @JoinColumn(name = "order_id", insertable = false, updatable = false)
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_order_id", insertable = false, updatable = false)
-    private AccountOrder accountOrder;
 
 }

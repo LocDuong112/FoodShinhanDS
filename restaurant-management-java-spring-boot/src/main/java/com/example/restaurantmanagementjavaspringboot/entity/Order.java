@@ -42,8 +42,8 @@ public class Order {
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_order_id", updatable = false, nullable = false)
-    private AccountOrder accountOrder;
+    @JoinColumn(name = "account_id", insertable = false , updatable = false)
+    private Account account;
 
     @OneToMany(mappedBy = "order")
     private Set<Bill> billSet;
