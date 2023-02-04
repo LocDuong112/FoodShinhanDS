@@ -47,6 +47,10 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", insertable = false)
+    @OneToMany(mappedBy = "account")
+    private Set<Order> orders;
+
+    @OneToOne(mappedBy = "account")
     private Role role;
 
 
