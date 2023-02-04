@@ -27,6 +27,9 @@ public class Account {
     private String email;
     private String password;
 
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
+
     @Column(name = "loyalty_point")
     private Long loyaltyPoint;
 
@@ -43,7 +46,7 @@ public class Account {
     private Set<FeedBack> feedBacks;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", insertable = false, updatable = false)
+    @JoinColumn(name = "role_id", insertable = false)
     private Role role;
 
 
