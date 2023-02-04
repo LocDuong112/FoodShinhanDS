@@ -25,7 +25,7 @@ public class ProductCart {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", updatable = false, insertable = false)
-
     private Cart cart;
+
     private Long quantity;
 }
