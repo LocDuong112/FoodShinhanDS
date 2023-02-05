@@ -5,4 +5,6 @@ import com.example.restaurantmanagementjavaspringboot.dto.AccountDto;
 public interface AccountService {
 
     AccountDto updateAccount(Long id, AccountDto accountDto);
+
+    AccountDto SignIn(String email, String password);
 }
