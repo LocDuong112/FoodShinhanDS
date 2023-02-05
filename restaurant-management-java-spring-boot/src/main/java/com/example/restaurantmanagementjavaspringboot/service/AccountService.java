@@ -6,5 +6,7 @@ public interface AccountService {
 
     AccountDto updateAccount(Long id, AccountDto accountDto);
 
-    AccountDto SignIn(String email, String password);
+    AccountDto signIn(String email, String password);
+
+    AccountDto signUp(AccountDto accountDto);
 }

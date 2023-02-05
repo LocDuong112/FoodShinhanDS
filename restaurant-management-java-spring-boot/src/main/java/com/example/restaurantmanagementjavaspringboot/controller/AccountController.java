@@ -37,11 +37,26 @@ public class AccountController {
         String password = info.get("password");
 
         try {
-            AccountDto signInAccount = accountService.SignIn(email, password);
+            AccountDto signInAccount = accountService.signIn(email, password);
             if (signInAccount == null) {
                 return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(signInAccount, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("signUp/{role}")
+    public ResponseEntity<AccountDto> signUp(@PathVariable("role") String role, @RequestBody AccountDto accountDto) {
+        accountDto.setRoleName(role);
+
+        try {
+            AccountDto signUpAccount = accountService.signUp(accountDto);
+            if (signUpAccount == null) {
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(signUpAccount, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

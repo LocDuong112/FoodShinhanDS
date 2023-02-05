@@ -71,7 +71,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDto SignIn(String email, String password) {
+    public AccountDto signIn(String email, String password) {
         // Hash password
         password = hashPassword(password);
 
@@ -88,9 +88,30 @@ public class AccountServiceImpl implements AccountService {
         return accountReturn;
     }
 
-//    https://www.geeksforgeeks.org/md5-hash-in-java/
+    @Override
+    public AccountDto signUp(AccountDto accountDto) {
+        // check for email
+        Optional<Account> account = accountRepository.findByEmail(accountDto.getEmail());
+
+        if (account.isPresent()) {
+            return null;
+        }
+
+        // Create new account
+        Account newAccount = accountMapper.INSTANCE.dtoToEntity(accountDto);
+        newAccount.setPassword(hashPassword(accountDto.getPassword()));
+        newAccount.setRole(roleRepository.findByRoleName(accountDto.getRoleName()));
+
+        // Return account
+        AccountDto accountReturn = accountMapper.INSTANCE.entitytoDto(accountRepository.save(newAccount));
+        accountReturn.setRoleName(newAccount.getRole().getRoleName());
+
+        return accountReturn;
+    }
+
+    //    https://www.geeksforgeeks.org/md5-hash-in-java/
 //    Check this ref for further on hashing password
-    public String hashPassword(String input) {
+    private String hashPassword(String input) {
         try {
             // Static getInstance method is called with hashing MD5
             MessageDigest md = MessageDigest.getInstance("MD5");
