@@ -31,8 +31,11 @@ public class ProductsServiceImpl implements ProductsService {
     }
 
     @Override
-    public List<Products> findMostBuyProducts() {
-        return productsRepository.findMostBuyProducts();
+    public List<Products> findMostBuyProductsByCustomer() {
+        if (true /*customer role, not have function yet*/) {
+            return productsRepository.findMostBuyProducts();
+        }
+        return null;
     }
 
 

@@ -27,8 +27,8 @@ public class ProductsController {
         return productsService.findProductsByNameByCustomer(name);
     }
 
-    @GetMapping("/api/product/most-buy-product")
-    public List<Products> findMostBuyProducts(){
-        return productsService.findMostBuyProducts();
+    @GetMapping("/api/product/customer/most-buy-product")
+    public List<Products> findMostBuyProductsByCustomer(){
+        return productsService.findMostBuyProductsByCustomer();
     }*/
 }
