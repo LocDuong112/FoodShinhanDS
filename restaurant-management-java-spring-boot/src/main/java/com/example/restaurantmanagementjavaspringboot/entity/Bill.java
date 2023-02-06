@@ -19,14 +19,10 @@ public class Bill {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "total_price")
-    private float totalPrice;
-
     private float fee;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
     private Order order;
-
 
 }

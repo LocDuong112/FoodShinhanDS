@@ -28,11 +28,11 @@ public class Products {
     private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categories_id", insertable = false, updatable = false)
+    @JoinColumn(name = "categories_id")
     private Categories categories;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "price_id", insertable = false, updatable = false)
+    @JoinColumn(name = "price_id")
     private Price price;
 
     @OneToMany(mappedBy = "products")
@@ -46,7 +46,6 @@ public class Products {
 
     @OneToMany(mappedBy = "products")
     private Set<ProductCart> productCarts;
-
 
 }
 

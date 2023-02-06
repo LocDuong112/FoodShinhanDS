@@ -30,6 +30,6 @@ public class Discounts {
     private Time endDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "products_id", insertable = false, updatable = false)
+    @JoinColumn(name = "products_id")
     private Products products;
 }

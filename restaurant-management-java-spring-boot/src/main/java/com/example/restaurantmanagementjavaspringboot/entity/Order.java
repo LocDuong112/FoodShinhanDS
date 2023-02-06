@@ -42,10 +42,7 @@ public class Order {
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", insertable = false , updatable = false)
+    @JoinColumn(name = "account_id")
     private Account account;
-
-    @OneToMany(mappedBy = "order")
-    private Set<Bill> billSet;
 
 }

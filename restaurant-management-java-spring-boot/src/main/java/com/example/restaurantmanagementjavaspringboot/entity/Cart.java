@@ -24,7 +24,7 @@ public class Cart {
     private String createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", updatable = false, insertable = false)
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @OneToMany(mappedBy = "cart")

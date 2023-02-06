@@ -20,11 +20,11 @@ public class ProductCart {
     private ProductCartPK id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", updatable = false, insertable = false)
+    @JoinColumn(name = "product_id_show")
     private Products products;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id", updatable = false, insertable = false)
+    @JoinColumn(name = "cart_id_show")
     private Cart cart;
 
     private Long quantity;

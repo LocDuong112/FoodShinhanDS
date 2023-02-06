@@ -19,11 +19,11 @@ public class OrderDetail {
     private OrderDetailPK Id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", updatable = false, insertable = false)
+    @JoinColumn(name = "order_id_show")
     private Order order;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "products_id", updatable = false, insertable = false)
+    @JoinColumn(name = "products_id_show")
     private Products products;
 
     private Long quantity;
