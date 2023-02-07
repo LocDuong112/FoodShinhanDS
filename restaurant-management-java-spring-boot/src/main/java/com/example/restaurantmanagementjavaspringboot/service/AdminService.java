@@ -1,10 +1,9 @@
 package com.example.restaurantmanagementjavaspringboot.service;
 
-import com.example.restaurantmanagementjavaspringboot.dto.StaffAccountDto;
-
-import java.util.List;
+import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountListViewModel;
 
 public interface AdminService {
 
-    List<StaffAccountDto> viewAllStaffAccount(int page_number);
+    AccountListViewModel viewAllAccount(int account_type, int page_number);
+
 }

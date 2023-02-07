@@ -1,16 +1,13 @@
 package com.example.restaurantmanagementjavaspringboot.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
-import javax.persistence.MapKeyColumn;
-import java.beans.BeanProperty;
 
 @Data
 @Setter
 @Getter
 @AllArgsConstructor
-public class StaffAccountDto {
+public class AdminViewAccountDto {
+    private String id;
     private String name;
     private String phone;
     private String email;
