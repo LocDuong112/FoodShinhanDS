@@ -20,14 +20,10 @@ public class Price {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    private Long price;
+    private float price;
 
-    @Column(name = "apply_data")
-    private String applyData;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "creator_id", insertable = false, updatable = false)
-    private Account account;
+    @Column(name = "apply_date")
+    private String applyDate;
 
     @OneToMany(mappedBy = "price")
     private Set<Products> products;

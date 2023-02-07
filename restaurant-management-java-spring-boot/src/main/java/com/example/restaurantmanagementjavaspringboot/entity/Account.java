@@ -37,9 +37,6 @@ public class Account {
     private boolean isValidated;
 
     @OneToMany(mappedBy = "account")
-    private Set<Price> prices;
-
-    @OneToMany(mappedBy = "account")
     private Set<Cart> carts;
 
     @OneToMany(mappedBy = "account")
@@ -49,6 +46,6 @@ public class Account {
     private Set<Order> orders;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", insertable = false)
+    @JoinColumn(name = "role_id")
     private Role role;
 }

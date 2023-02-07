@@ -9,6 +9,8 @@ import com.example.restaurantmanagementjavaspringboot.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.Optional;
 
 @Service
@@ -38,7 +40,6 @@ public class AccountServiceImpl implements AccountService {
         updateAccount.setId(account.get().getId());
         updateAccount.setCarts(account.get().getCarts());
         updateAccount.setFeedBacks(account.get().getFeedBacks());
-        updateAccount.setPrices(account.get().getPrices());
         updateAccount.setRole(roleRepository.findByRoleName(accountDto.getRoleName()));
 
         // 2.1. Keep old changes if new value is null
@@ -66,5 +67,72 @@ public class AccountServiceImpl implements AccountService {
         accountReturn.setRoleName(updateAccount.getRole().getRoleName());
 
         return accountReturn;
+    }
+
+    @Override
+    public AccountDto signIn(String email, String password) {
+        // Hash password
+        password = hashPassword(password);
+
+        // Check if account is in db
+        Optional<Account> account = accountRepository.findByEmailAndPasswordAndIsDeleted(email, password, false);
+        if (account.isEmpty()) {
+            return null;
+        }
+
+        // Return account
+        AccountDto accountReturn = accountMapper.INSTANCE.entitytoDto(account.get());
+        accountReturn.setRoleName(account.get().getRole().getRoleName());
+
+        return accountReturn;
+    }
+
+    @Override
+    public AccountDto signUp(AccountDto accountDto) {
+        // check for email
+        Optional<Account> account = accountRepository.findByEmail(accountDto.getEmail());
+
+        if (account.isPresent()) {
+            return null;
+        }
+
+        // Create new account
+        Account newAccount = accountMapper.INSTANCE.dtoToEntity(accountDto);
+        newAccount.setPassword(hashPassword(accountDto.getPassword()));
+        newAccount.setRole(roleRepository.findByRoleName(accountDto.getRoleName()));
+
+        // Return account
+        AccountDto accountReturn = accountMapper.INSTANCE.entitytoDto(accountRepository.save(newAccount));
+        accountReturn.setRoleName(newAccount.getRole().getRoleName());
+
+        return accountReturn;
+    }
+
+    //    https://www.geeksforgeeks.org/md5-hash-in-java/
+//    Check this ref for further on hashing password
+    private String hashPassword(String input) {
+        try {
+            // Static getInstance method is called with hashing MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            // digest() method is called to calculate message digest
+            // of an input digest() return array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

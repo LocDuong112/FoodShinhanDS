@@ -23,9 +23,6 @@ public class Order {
     @Column(name = "customer_note")
     private String customerNote;
 
-    @Column(name = "total_price")
-    private float totalPrice;
-
     @Column(name = "payment_status")
     private String paymentStatus;
 
@@ -42,10 +39,7 @@ public class Order {
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", insertable = false , updatable = false)
+    @JoinColumn(name = "account_id")
     private Account account;
-
-    @OneToMany(mappedBy = "order")
-    private Set<Bill> billSet;
 
 }

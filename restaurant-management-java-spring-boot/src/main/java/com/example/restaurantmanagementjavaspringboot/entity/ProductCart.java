@@ -14,18 +14,18 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ProductCart")
 public class ProductCart {
-
     @EmbeddedId
-    @AttributeOverrides({@AttributeOverride(name = "productId", column = @Column(name = "product_id", nullable = false)), @AttributeOverride(name = "cartId", column = @Column(name = "cart_id", nullable = false))})
     private ProductCartPK id;
 
+    @MapsId("cartId")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", updatable = false, insertable = false)
-    private Products products;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id", updatable = false, insertable = false)
+    @JoinColumn(name = "cart_id")
     private Cart cart;
+
+    @MapsId("productsId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Products products;
 
     private Long quantity;
 }
