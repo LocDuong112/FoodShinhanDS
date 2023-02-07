@@ -17,19 +17,16 @@ public class ProductsController {
     @Autowired
     private ProductsService productsService;
 
-    @Autowired
-    private ProductsMapper productsMapper;
 
     @GetMapping("product/manager/{name}")
     public ResponseEntity<List<ProductsDto>> findProductsByNameByManager(@PathVariable String name) {
         try {
             List<ProductsDto> productsListResult
-                    = productsMapper.INSTANCE.entityListtoDtoList(productsService.findProductsByNameByManager("MANAGER", name));
+                    = productsService.findProductsByNameByManager("MANAGER", name);
 
             if (productsListResult == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
             return new ResponseEntity<>(productsListResult, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -40,7 +37,7 @@ public class ProductsController {
     public ResponseEntity<List<ProductsDto>> findProductsByNameByCustomer(@PathVariable String name) {
         try {
             List<ProductsDto> productsListResult
-                    = productsMapper.INSTANCE.entityListtoDtoList(productsService.findProductsByNameByCustomer("CUSTOMER", name));
+                    = productsService.findProductsByNameByCustomer("CUSTOMER", name);
 
             if (productsListResult == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -56,7 +53,7 @@ public class ProductsController {
     public ResponseEntity<List<ProductsDto>> findMostBuyProductsByCustomer() {
         try {
             List<ProductsDto> productsListResult
-                    = productsMapper.INSTANCE.entityListtoDtoList(productsService.findMostBuyProductsByCustomer("CUSTOMER"));
+                    = productsService.findMostBuyProductsByCustomer("CUSTOMER");
 
             if (productsListResult == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);

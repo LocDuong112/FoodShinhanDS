@@ -1,5 +1,7 @@
 package com.example.restaurantmanagementjavaspringboot.service.impl;
 
+import com.example.restaurantmanagementjavaspringboot.converter.ProductsMapper;
+import com.example.restaurantmanagementjavaspringboot.dto.ProductsDto;
 import com.example.restaurantmanagementjavaspringboot.entity.Products;
 import com.example.restaurantmanagementjavaspringboot.repository.ProductsRepository;
 import com.example.restaurantmanagementjavaspringboot.service.ProductsService;
@@ -14,26 +16,29 @@ public class ProductsServiceImpl implements ProductsService {
     @Autowired
     private ProductsRepository productsRepository;
 
+    @Autowired
+    private ProductsMapper productsMapper;
+
     @Override
-    public List<Products> findProductsByNameByManager(String role, String name) {
+    public List<ProductsDto> findProductsByNameByManager(String role, String name) {
         if (role.equals("MANAGER")) {
-            return productsRepository.findProductsByName(name);
+            return productsMapper.INSTANCE.entityListtoDtoList(productsRepository.findProductsByName(name));
         }
         return null;
     }
 
     @Override
-    public List<Products> findProductsByNameByCustomer(String role, String name) {
+    public List<ProductsDto> findProductsByNameByCustomer(String role, String name) {
         if (role.equals("CUSTOMER")) {
-            return productsRepository.findProductsByName(name);
+            return productsMapper.INSTANCE.entityListtoDtoList(productsRepository.findProductsByName(name));
         }
         return null;
     }
 
     @Override
-    public List<Products> findMostBuyProductsByCustomer(String role) {
+    public List<ProductsDto> findMostBuyProductsByCustomer(String role) {
         if (role.equals("CUSTOMER")) {
-            return productsRepository.findMostBuyProducts();
+            return productsMapper.INSTANCE.entityListtoDtoList(productsRepository.findMostBuyProducts());
         }
         return null;
     }
