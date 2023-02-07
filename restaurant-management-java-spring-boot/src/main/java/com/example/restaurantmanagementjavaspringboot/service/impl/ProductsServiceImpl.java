@@ -15,24 +15,24 @@ public class ProductsServiceImpl implements ProductsService {
     private ProductsRepository productsRepository;
 
     @Override
-    public List<Products> findProductsByNameByManager(String name) {
-        if (true /*product role, not have function yet*/) {
+    public List<Products> findProductsByNameByManager(String role, String name) {
+        if (role.equals("MANAGER")) {
             return productsRepository.findProductsByName(name);
         }
         return null;
     }
 
     @Override
-    public List<Products> findProductsByNameByCustomer(String name) {
-        if (true /*customer role, not have function yet*/) {
+    public List<Products> findProductsByNameByCustomer(String role, String name) {
+        if (role.equals("CUSTOMER")) {
             return productsRepository.findProductsByName(name);
         }
         return null;
     }
 
     @Override
-    public List<Products> findMostBuyProductsByCustomer() {
-        if (true /*customer role, not have function yet*/) {
+    public List<Products> findMostBuyProductsByCustomer(String role) {
+        if (role.equals("CUSTOMER")) {
             return productsRepository.findMostBuyProducts();
         }
         return null;

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface ProductsService {
-    public List<Products> findProductsByNameByManager(String name);
-    public List<Products> findMostBuyProductsByCustomer();
-    public List<Products> findProductsByNameByCustomer(String name);
+    public List<Products> findProductsByNameByManager(String role, String name);
+    public List<Products> findMostBuyProductsByCustomer(String role);
+    public List<Products> findProductsByNameByCustomer(String role, String name);
 }
