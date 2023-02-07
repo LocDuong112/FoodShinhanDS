@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ProductsRepository extends JpaRepository<Products, Long> {
-    @Query(value = "SELECT * FROM PRODUCTS WHERE Name LIKE %?1%", nativeQuery = true)
+    @Query(value = "SELECT * FROM PRODUCTS WHERE Name LIKE %?1% COLLATE binary_ci", nativeQuery = true)
     List<Products> findProductsByName(String name);
 
     @Query(value = "SELECT * FROM PRODUCTS WHERE ID IN" +
