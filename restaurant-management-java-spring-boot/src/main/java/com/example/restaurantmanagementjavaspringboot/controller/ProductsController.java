@@ -1,5 +1,6 @@
 package com.example.restaurantmanagementjavaspringboot.controller;
 
+import com.example.restaurantmanagementjavaspringboot.converter.ProductsMapper;
 import com.example.restaurantmanagementjavaspringboot.entity.Products;
 import com.example.restaurantmanagementjavaspringboot.repository.ProductsRepository;
 import com.example.restaurantmanagementjavaspringboot.service.ProductsService;
@@ -30,5 +31,15 @@ public class ProductsController {
     @GetMapping("/api/product/customer/most-buy-product")
     public List<Products> findMostBuyProductsByCustomer(){
         return productsService.findMostBuyProductsByCustomer();
+    }*/
+
+    /*@Autowired
+    private ProductsMapper productsMapper;
+
+    @GetMapping("/api/product/manager/{name}")
+    public String findProductsByNameByManager(@PathVariable String name){
+        System.out.println(productsMapper.INSTANCE.entitytoDto(productsService.findProductsByNameByManager(name).get(0)));
+        System.out.println(productsService.findProductsByNameByManager(name).get(0));
+        return "Hi";
     }*/
 }
