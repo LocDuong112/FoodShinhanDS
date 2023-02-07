@@ -37,9 +37,6 @@ public class Account {
     private boolean isValidated;
 
     @OneToMany(mappedBy = "account")
-    private Set<Price> prices;
-
-    @OneToMany(mappedBy = "account")
     private Set<Cart> carts;
 
     @OneToMany(mappedBy = "account")

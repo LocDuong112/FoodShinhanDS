@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,7 +22,7 @@ public class Discounts {
     private Long id;
 
     private String note;
-    private double price;
+    private float price;
 
     @Column(name = "start_date")
     private Time startDate;
@@ -29,7 +30,6 @@ public class Discounts {
     @Column(name = "end_date")
     private Time endDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "products_id")
-    private Products products;
+    @OneToMany(mappedBy = "discount")
+    private Set<Products> products;
 }

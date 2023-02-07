@@ -51,6 +51,7 @@ public class ProductsServiceImpl implements ProductsService {
             tmpProductsDto = productsMapper.INSTANCE.entitytoDto(products);
             tmpProductsDto.setCategoryName(products.getCategories().getName());
             tmpProductsDto.setPriceValue(products.getPrice().getPrice());
+            tmpProductsDto.setDiscount(products.getDiscount().getPrice());
 
             fetchProductsDto.add(tmpProductsDto);
         }

@@ -21,6 +21,9 @@ public class Bill {
 
     private float fee;
 
+    @Column(name = "total_price")
+    private float totalPrice;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;

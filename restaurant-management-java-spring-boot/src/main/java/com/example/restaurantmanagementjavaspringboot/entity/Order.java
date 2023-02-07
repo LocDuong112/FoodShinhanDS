@@ -23,9 +23,6 @@ public class Order {
     @Column(name = "customer_note")
     private String customerNote;
 
-    @Column(name = "total_price")
-    private float totalPrice;
-
     @Column(name = "payment_status")
     private String paymentStatus;
 

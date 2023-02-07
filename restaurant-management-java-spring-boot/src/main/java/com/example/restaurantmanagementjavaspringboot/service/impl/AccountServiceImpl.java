@@ -40,7 +40,6 @@ public class AccountServiceImpl implements AccountService {
         updateAccount.setId(account.get().getId());
         updateAccount.setCarts(account.get().getCarts());
         updateAccount.setFeedBacks(account.get().getFeedBacks());
-        updateAccount.setPrices(account.get().getPrices());
         updateAccount.setRole(roleRepository.findByRoleName(accountDto.getRoleName()));
 
         // 2.1. Keep old changes if new value is null

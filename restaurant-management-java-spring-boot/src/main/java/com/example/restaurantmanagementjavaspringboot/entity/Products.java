@@ -35,8 +35,9 @@ public class Products {
     @JoinColumn(name = "price_id")
     private Price price;
 
-    @OneToMany(mappedBy = "products")
-    private Set<Discounts> discounts;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "discount_id")
+    private Discounts discount;
 
     @OneToMany(mappedBy = "products")
     private Set<FeedBack> feedBacks;

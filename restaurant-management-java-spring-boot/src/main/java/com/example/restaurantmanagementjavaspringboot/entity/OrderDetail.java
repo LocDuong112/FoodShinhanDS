@@ -15,18 +15,18 @@ import javax.persistence.*;
 @Table(name = "orderdetail")
 public class OrderDetail {
     @EmbeddedId
-    @AttributeOverrides({@AttributeOverride(name = "orderId", column = @Column(name = "order_id", nullable = false)), @AttributeOverride(name = "productId", column = @Column(name = "product_id", nullable = false))})
-    private OrderDetailPK Id;
+    private OrderDetailPK id;
 
+    @MapsId("orderId")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id_show")
+    @JoinColumn(name = "order_id")
     private Order order;
 
+    @MapsId("productsId")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "products_id_show")
+    @JoinColumn(name = "product_id")
     private Products products;
 
     private Long quantity;
     private float price;
-
 }
