@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/api/")
 @RestController
@@ -18,11 +19,13 @@ public class ProductsController {
     private ProductsService productsService;
 
 
-    @GetMapping("product/manager/{name}")
-    public ResponseEntity<List<ProductsDto>> findProductsByNameByManager(@PathVariable String name) {
+    @GetMapping(value = {"product/manager/{name}", "product/manager/", "product/manager"})
+    public ResponseEntity<List<ProductsDto>> findProductsByNameByManager(
+            @PathVariable(required = false) String name) {
         try {
+            Optional<String> optional = Optional.ofNullable(name);
             List<ProductsDto> productsListResult
-                    = productsService.findProductsByNameByManager("MANAGER", name);
+                    = productsService.findProductsByNameByManager("MANAGER", optional.orElse(""));
 
             if (productsListResult == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -33,11 +36,13 @@ public class ProductsController {
         }
     }
 
-    @GetMapping("product/customer/{name}")
-    public ResponseEntity<List<ProductsDto>> findProductsByNameByCustomer(@PathVariable String name) {
+    @GetMapping(value = {"product/customer/{name}", "product/customer/", "product/customer"})
+    public ResponseEntity<List<ProductsDto>> findProductsByNameByCustomer(
+            @PathVariable(required = false) String name) {
         try {
+            Optional<String> optional = Optional.ofNullable(name);
             List<ProductsDto> productsListResult
-                    = productsService.findProductsByNameByCustomer("CUSTOMER", name);
+                    = productsService.findProductsByNameByCustomer("CUSTOMER", optional.orElse(""));
 
             if (productsListResult == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
