@@ -22,7 +22,7 @@ public class AdminRepository {
                 .query("select id, name, phone, email, is_validated, is_deleted"
                                 + " from account"
                                 + " where is_deleted = 0 and account.role_id = " + account_type
-                                + " offset (2*" + (pageNumber - 1) +") rows fetch next "+ PageConvention.objectPerPage +" rows only",
+                                + " offset (2*" + (pageNumber - 1) +") rows fetch next "+ PageConvention.LIMIT_PER_PAGE +" rows only",
                         (rs, rowNum) ->
                                 new AdminViewAccountDto(
                                         rs.getString("id"),
@@ -40,7 +40,7 @@ public class AdminRepository {
                 .query("select id, name, phone, email, is_validated, is_deleted"
                                 + " from account"
                                 + " where is_deleted = 0"
-                                + " offset (2*" + (pageNumber - 1) +") rows fetch next "+ PageConvention.objectPerPage +" rows only",
+                                + " offset (2*" + (pageNumber - 1) +") rows fetch next "+ PageConvention.LIMIT_PER_PAGE +" rows only",
                         (rs, rowNum) ->
                                 new AdminViewAccountDto(
                                         rs.getString("id"),
@@ -66,7 +66,7 @@ public class AdminRepository {
 
     public int getTotalPageAccountByRole(int account_type) {
             Integer result = jdbcTemplate
-                    .queryForObject("select ceil(count(*)/ "+ PageConvention.objectPerPage +")"
+                    .queryForObject("select ceil(count(*)/ "+ PageConvention.LIMIT_PER_PAGE +")"
                                     + " from account"
                                     + " where account.role_id = " + account_type,
                             Integer.class
@@ -77,7 +77,7 @@ public class AdminRepository {
 
     public int getTotalPageAllAccount() {
         Integer result = jdbcTemplate
-                .queryForObject("select ceil(count(*)/ "+ PageConvention.objectPerPage +")"
+                .queryForObject("select ceil(count(*)/ "+ PageConvention.LIMIT_PER_PAGE +")"
                                 + " from account",
                         Integer.class
                 );

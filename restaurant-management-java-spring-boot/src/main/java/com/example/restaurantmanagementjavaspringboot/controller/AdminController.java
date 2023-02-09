@@ -5,6 +5,7 @@ import com.example.restaurantmanagementjavaspringboot.dto.AdminViewAccountDto;
 import com.example.restaurantmanagementjavaspringboot.service.AdminService;
 import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountInfoViewModel;
 import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountListViewModel;
+import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountTemplateViewModel;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -76,6 +77,16 @@ public class AdminController {
 
         String referer = request.getHeader("Referer");
         return "redirect:"+referer;
+//        return "AdminViewAccount";
+    }
+
+    @GetMapping("templateIndividualAccount")
+    @ResponseBody
+    public AccountTemplateViewModel templateIndividualAccountPage(final Model model) {
+        AccountTemplateViewModel viewModel = adminService.templateIndividualAccount();
+        model.addAttribute("Model", viewModel);
+
+        return viewModel;
 //        return "AdminViewAccount";
     }
 }

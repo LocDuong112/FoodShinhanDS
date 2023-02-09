@@ -5,6 +5,7 @@ import com.example.restaurantmanagementjavaspringboot.dto.AdminEditAccountDto;
 import com.example.restaurantmanagementjavaspringboot.dto.AdminViewAccountDto;
 import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountInfoViewModel;
 import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountListViewModel;
+import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountTemplateViewModel;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface AdminService {
     int editIndividualAccount(AdminEditAccountDto accountDto);
 
     int deleteIndividualAccount(long id);
+
+    AccountTemplateViewModel templateIndividualAccount();
 }
