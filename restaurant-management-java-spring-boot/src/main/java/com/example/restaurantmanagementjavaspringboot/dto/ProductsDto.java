@@ -15,5 +15,7 @@ public class ProductsDto {
     private String imageUrl;
     private String categoryName;
     private float priceValue;
-    private float discount;
+    private float discountDto;
+
+    // TODO: Link to linh's app
 }
