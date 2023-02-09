@@ -1,10 +1,16 @@
 package com.example.restaurantmanagementjavaspringboot.service.impl;
 
+import com.example.restaurantmanagementjavaspringboot.dto.AccountDto;
+import com.example.restaurantmanagementjavaspringboot.dto.AdminEditAccountDto;
+import com.example.restaurantmanagementjavaspringboot.dto.AdminViewAccountDto;
 import com.example.restaurantmanagementjavaspringboot.repository.AdminRepository;
 import com.example.restaurantmanagementjavaspringboot.service.AdminService;
+import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountInfoViewModel;
 import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountListViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -29,6 +35,27 @@ public class AdminServiceImpl implements AdminService {
                 adminRepository.getAllRole(),
                 adminRepository.getAccountByRole(account_type, page_number)
         );
+    }
+
+    @Override
+    public List<AdminViewAccountDto> takeAllAccount(int account_type, int page_number) {
+        if (account_type == 0) return adminRepository.getAllAccount(page_number);
+
+        return adminRepository.getAccountByRole(account_type, page_number);
+    }
+
+    @Override
+    public AccountInfoViewModel viewIndividualAccount(long id) {
+        return new AccountInfoViewModel(
+                adminRepository.getAccountInfoById(id),
+                adminRepository.getAllRole()
+        );
+    }
+
+    @Override
+    public int editIndividualAccount(AdminEditAccountDto accountDto) {
+        int res = adminRepository.editAccount(accountDto);
+        return res;
     }
 
 }
