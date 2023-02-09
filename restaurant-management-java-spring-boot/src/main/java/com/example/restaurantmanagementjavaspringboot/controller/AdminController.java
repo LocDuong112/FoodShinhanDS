@@ -1,18 +1,18 @@
 package com.example.restaurantmanagementjavaspringboot.controller;
-import com.example.restaurantmanagementjavaspringboot.dto.AccountDto;
+import com.example.restaurantmanagementjavaspringboot.dto.AdminCreateAccountDto;
 import com.example.restaurantmanagementjavaspringboot.dto.AdminEditAccountDto;
 import com.example.restaurantmanagementjavaspringboot.dto.AdminViewAccountDto;
 import com.example.restaurantmanagementjavaspringboot.service.AdminService;
 import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountInfoViewModel;
 import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountListViewModel;
 import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountTemplateViewModel;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,10 +59,9 @@ public class AdminController {
     }
 
     @PutMapping("IndividualAccount")
-    public String editIndividualAccount(@RequestBody AdminEditAccountDto accountDto,
+    public String editIndividualAccount(@RequestBody @Valid AdminEditAccountDto accountDto,
                                         HttpServletRequest request) {
-        int affectedRow = adminService.editIndividualAccount(accountDto);
-        System.out.println("affected row: " + affectedRow);
+        adminService.editIndividualAccount(accountDto);
 
         String referer = request.getHeader("Referer");
         return "redirect:"+referer;
@@ -72,8 +71,7 @@ public class AdminController {
     @DeleteMapping("IndividualAccount")
     public String deleteIndividualAccount(@RequestParam(value = "account_id") long id,
                                           HttpServletRequest request) {
-        int affectedRow = adminService.deleteIndividualAccount(id);
-        System.out.println("affected row: " + affectedRow);
+        adminService.deleteIndividualAccount(id);
 
         String referer = request.getHeader("Referer");
         return "redirect:"+referer;
@@ -87,6 +85,16 @@ public class AdminController {
         model.addAttribute("Model", viewModel);
 
         return viewModel;
+//        return "AdminViewAccount";
+    }
+
+    @PostMapping("IndividualAccount")
+    public String createIndividualAccount(@RequestBody @Valid AdminCreateAccountDto accountDto,
+                                        HttpServletRequest request) {
+        adminService.createIndividualAccount(accountDto);
+
+        String referer = request.getHeader("Referer");
+        return "redirect:"+referer;
 //        return "AdminViewAccount";
     }
 }

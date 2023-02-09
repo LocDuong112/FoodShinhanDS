@@ -9,6 +9,7 @@ import com.example.restaurantmanagementjavaspringboot.service.AdminService;
 import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountInfoViewModel;
 import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountListViewModel;
 import com.example.restaurantmanagementjavaspringboot.viewmodel.AccountTemplateViewModel;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +68,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AccountTemplateViewModel templateIndividualAccount() {
         return new AccountTemplateViewModel(new AdminCreateAccountDto(), adminRepository.getAllRole());
+    }
+
+    @Override
+    public int createIndividualAccount(AdminCreateAccountDto accountDto) {
+        accountDto.setPassword(BCrypt.hashpw(accountDto.getPassword(), BCrypt.gensalt(7)));
+        return adminRepository.createAccount(accountDto);
     }
 
 }

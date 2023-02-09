@@ -1,10 +1,7 @@
 package com.example.restaurantmanagementjavaspringboot.repository;
 
 import com.example.restaurantmanagementjavaspringboot.convention.PageConvention;
-import com.example.restaurantmanagementjavaspringboot.dto.AccountDto;
-import com.example.restaurantmanagementjavaspringboot.dto.AdminEditAccountDto;
-import com.example.restaurantmanagementjavaspringboot.dto.AdminViewAccountDto;
-import com.example.restaurantmanagementjavaspringboot.dto.RoleDto;
+import com.example.restaurantmanagementjavaspringboot.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -22,7 +19,7 @@ public class AdminRepository {
                 .query("select id, name, phone, email, is_validated, is_deleted"
                                 + " from account"
                                 + " where is_deleted = 0 and account.role_id = " + account_type
-                                + " offset (2*" + (pageNumber - 1) +") rows fetch next "+ PageConvention.LIMIT_PER_PAGE +" rows only",
+                                + " offset ("+ PageConvention.LIMIT_PER_PAGE +"*" + (pageNumber - 1) +") rows fetch next "+ PageConvention.LIMIT_PER_PAGE +" rows only",
                         (rs, rowNum) ->
                                 new AdminViewAccountDto(
                                         rs.getString("id"),
@@ -40,7 +37,7 @@ public class AdminRepository {
                 .query("select id, name, phone, email, is_validated, is_deleted"
                                 + " from account"
                                 + " where is_deleted = 0"
-                                + " offset (2*" + (pageNumber - 1) +") rows fetch next "+ PageConvention.LIMIT_PER_PAGE +" rows only",
+                                + " offset ("+ PageConvention.LIMIT_PER_PAGE +"*" + (pageNumber - 1) +") rows fetch next "+ PageConvention.LIMIT_PER_PAGE +" rows only",
                         (rs, rowNum) ->
                                 new AdminViewAccountDto(
                                         rs.getString("id"),
@@ -68,7 +65,7 @@ public class AdminRepository {
             Integer result = jdbcTemplate
                     .queryForObject("select ceil(count(*)/ "+ PageConvention.LIMIT_PER_PAGE +")"
                                     + " from account"
-                                    + " where account.role_id = " + account_type,
+                                    + " where is_deleted = 0 and account.role_id = " + account_type,
                             Integer.class
                     );
 
@@ -78,17 +75,18 @@ public class AdminRepository {
     public int getTotalPageAllAccount() {
         Integer result = jdbcTemplate
                 .queryForObject("select ceil(count(*)/ "+ PageConvention.LIMIT_PER_PAGE +")"
-                                + " from account",
+                                + " from account"
+                                + " where is_deleted = 0",
                         Integer.class
                 );
         return result == null ? 0 : result;
     }
 
     public AdminEditAccountDto getAccountInfoById(long id) {
-        return jdbcTemplate
-                .queryForObject("select account.id, name, dob, gender, phone, email, password, loyalty_point, is_validated, account.role_id, is_deleted"
-                                + " from account, role"
-                                + " where account.id = " + String.valueOf(id) + " and account.role_id = role.id",
+        List<AdminEditAccountDto> result = jdbcTemplate
+                .query("select id, name, dob, gender, phone, email, password, loyalty_point, is_validated, role_id"
+                                + " from account"
+                                + " where account.id = " + id + " and is_deleted = 0",
                         (rs, rowNum) ->
                                 new AdminEditAccountDto(
                                         rs.getLong("id"),
@@ -102,6 +100,8 @@ public class AdminRepository {
                                         rs.getLong("role_id")
                                 )
                 );
+
+        return result.size() > 0 ? result.get(0) : new AdminEditAccountDto();
     }
 
     public int editAccount(AdminEditAccountDto accountDto) {
@@ -129,32 +129,33 @@ public class AdminRepository {
                                 +" and ROLE_ID = "+ accountDto.getRoleId()
                                 +")"
         );
-
-//        return jdbcTemplate.update("UPDATE ACCOUNT"
-//                +" SET DOB = ?"
-//                +", EMAIL = ?"
-//                +", GENDER = ?"
-//                +", IS_VALIDATED = ?"
-//                +", LOYALTY_POINT = ?"
-//                +", NAME = ?"
-//                +", PHONE = ?"
-//                +", ROLE_ID = ?"
-//                +" WHERE ID = ?"
-//                +" and IS_DELETED = 0",
-//                accountDto.getDob(),
-//                accountDto.getEmail(),
-//                accountDto.isGender(),
-//                accountDto.isValidated(),
-//                accountDto.getLoyaltyPoint(),
-//                accountDto.getName(),
-//                accountDto.getPhone(),
-//                accountDto.getRoleId(),
-//                accountDto.getId());
-
-//        return jdbcTemplate.update("update account set name = 'Jones' where id = 2");
     }
 
     public int deleteAccount(long id) {
         return jdbcTemplate.update("update ACCOUNT set is_deleted = 1 where id = " + id + " and is_deleted = 0");
+    }
+
+    public int createAccount(AdminCreateAccountDto accountDto) {
+        return jdbcTemplate.update("insert into ACCOUNT (" +
+                "NAME, " +
+                "PHONE, " +
+                "EMAIL, " +
+                "ROLE_ID, " +
+                "GENDER, " +
+                "DOB, " +
+                "LOYALTY_POINT, " +
+                "PASSWORD, " +
+                "IS_VALIDATED, " +
+                "IS_DELETED " +
+                ") values (?, ?, ?, ?, ?, ?, ?, ?, 1, 0)",
+                accountDto.getName(),
+                accountDto.getPhone(),
+                accountDto.getEmail(),
+                accountDto.getRoleId(),
+                accountDto.isGender(),
+                accountDto.getDob(),
+                accountDto.getLoyaltyPoint(),
+                accountDto.getPassword()
+        );
     }
 }
