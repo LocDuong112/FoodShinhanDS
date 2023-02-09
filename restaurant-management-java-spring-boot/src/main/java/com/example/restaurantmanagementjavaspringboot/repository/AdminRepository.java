@@ -105,28 +105,7 @@ public class AdminRepository {
     }
 
     public int editAccount(AdminEditAccountDto accountDto) {
-//        return jdbcTemplate.update("UPDATE ACCOUNT"
-//                +" SET DOB = "+ accountDto.getDob()
-//                +", EMAIL = "+ accountDto.getEmail()
-//                +", GENDER = "+ accountDto.isGender()
-//                +", IS_VALIDATED = "+ accountDto.isValidated()
-//                +", LOYALTY_POINT = "+ accountDto.getLoyaltyPoint()
-//                +", NAME = "+ accountDto.getName()
-//                +", PHONE = "+ accountDto.getPhone()
-//                +", ROLE_ID = "+ accountDto.getRoleId()
-//                +" WHERE ID = "+ accountDto.getId()
-//                +" and IS_DELETED = 0"
-//                +" and not exists (select id from account where "
-//                        +" ID = "+ accountDto.getId()
-//                        +" and DOB = "+ accountDto.getDob()
-//                        +" and EMAIL = "+ accountDto.getEmail()
-//                        +" and GENDER = "+ accountDto.isGender()
-//                        +" and IS_VALIDATED = "+ accountDto.isValidated()
-//                        +" and LOYALTY_POINT = "+ accountDto.getLoyaltyPoint()
-//                        +" and NAME = "+ accountDto.getName()
-//                        +" and PHONE = "+ accountDto.getPhone()
-//                        +" and ROLE_ID = "+ accountDto.getRoleId()
-//                +")");
+
         return jdbcTemplate.update("UPDATE ACCOUNT"
                 +" SET DOB = "+ (accountDto.getDob() == null ? null : "'" + accountDto.getDob() + "'")
                 +", EMAIL = '"+ accountDto.getEmail() + "'"
@@ -173,5 +152,9 @@ public class AdminRepository {
 //                accountDto.getId());
 
 //        return jdbcTemplate.update("update account set name = 'Jones' where id = 2");
+    }
+
+    public int deleteAccount(long id) {
+        return jdbcTemplate.update("update ACCOUNT set is_deleted = 1 where id = " + id + " and is_deleted = 0");
     }
 }

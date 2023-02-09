@@ -54,8 +54,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public int editIndividualAccount(AdminEditAccountDto accountDto) {
-        int res = adminRepository.editAccount(accountDto);
-        return res;
+        return adminRepository.editAccount(accountDto);
+    }
+
+    @Override
+    public int deleteIndividualAccount(long id) {
+        return adminRepository.deleteAccount(id);
     }
 
 }

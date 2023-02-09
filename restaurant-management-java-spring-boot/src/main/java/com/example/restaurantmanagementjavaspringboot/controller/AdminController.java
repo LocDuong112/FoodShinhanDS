@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class AdminController {
         return map;
     }
 
-    @GetMapping("viewIndividualAccount")
+    @GetMapping("IndividualAccount")
     @ResponseBody
     public AccountInfoViewModel viewIndividualAccountPage(@RequestParam(value = "account_id") long id,
                                                           final Model model) {
@@ -56,12 +57,25 @@ public class AdminController {
 //        return "AdminViewAccount";
     }
 
-    @PutMapping("editIndividualAccount")
-    public String editIndividualAccount(@RequestBody AdminEditAccountDto accountDto) {
-        System.out.println("affected row: " + 0);
+    @PutMapping("IndividualAccount")
+    public String editIndividualAccount(@RequestBody AdminEditAccountDto accountDto,
+                                        HttpServletRequest request) {
         int affectedRow = adminService.editIndividualAccount(accountDto);
         System.out.println("affected row: " + affectedRow);
-        return "redirect:viewAllAccount";
+
+        String referer = request.getHeader("Referer");
+        return "redirect:"+referer;
+//        return "AdminViewAccount";
+    }
+
+    @DeleteMapping("IndividualAccount")
+    public String deleteIndividualAccount(@RequestParam(value = "account_id") long id,
+                                          HttpServletRequest request) {
+        int affectedRow = adminService.deleteIndividualAccount(id);
+        System.out.println("affected row: " + affectedRow);
+
+        String referer = request.getHeader("Referer");
+        return "redirect:"+referer;
 //        return "AdminViewAccount";
     }
 }

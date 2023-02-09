@@ -18,4 +18,6 @@ public interface AdminService {
 
 
     int editIndividualAccount(AdminEditAccountDto accountDto);
+
+    int deleteIndividualAccount(long id);
 }
