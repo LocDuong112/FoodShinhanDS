@@ -30,4 +30,8 @@ public class Cart {
     @OneToMany(mappedBy = "cart")
     private Set<ProductCart> productCarts;
 
+    public Cart(Long id) {
+        this.id = id;
+    }
+
 }
