@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:utext="#{customer.restaurant.title}">Restaurant - Homepage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+</head>
+
+<body>
+<div class="container">
+    <header>
+        <nav class="navbar navbar-expand-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/api/customer">Food Service</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mynavbar">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/api/customer/orders" th:utext="#{customer.nav.order}">Orders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)" th:utext="#{customer.nav.care-service}">Care
+                                Service</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="?lang=en" th:utext="#{lang.en}">English</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="?lang=vi" th:utext="#{lang.vi}">Vietnamese</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-link dropdown-toggle text-decoration-none"
+                                    data-bs-toggle="dropdown" th:utext="${customerEmail}">
+                                Dropdown button
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/api/customer/profile"
+                                       th:utext="#{customer.nav.profile}">Profile</a></li>
+                                <div class="dropdown-divider"></div>
+                                <li>
+                                    <a href="/api/customer/logout" class="dropdown-item text-danger"
+                                       th:utext="#{customer.nav.logout}">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="mt-5">
+        <h1 th:utext="${restaurant.name}"></h1>
+        <div class="mt-5">
+            <table id="example" class="table table-striped table-hover align-middle" style="width:100%">
+                <thead>
+                <tr>
+                    <th th:utext="#{customer.restaurant.food-id}">Food ID</th>
+                    <th th:utext="#{customer.restaurant.food-name}">Food name</th>
+                    <th th:utext="#{customer.restaurant.price}">Price</th>
+                    <th th:utext="#{customer.restaurant.image-link}">Image Link</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="food: ${foods}" th:id="${food.id}">
+                    <td th:utext="${food.id}" class="food-id"></td>
+                    <td th:utext="${food.name}" class="food-name"></td>
+                    <td th:utext="${food.price}" class="price"></td>
+                    <td>
+                        <a th:href="${food.imageLink}" target="_blank" class="btn btn-info">Image</a>
+                    </td>
+                    <td>
+                        <a onclick="addToOrder(this)" class="btn btn-success" th:utext="#{customer.restaurant.order}">Order</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-5">
+            <h2 class="mt-5 mb-3" th:utext="#{customer.restaurant.your-order}">Your order</h2>
+            <h5 class="mb-3"><span th:utext="#{customer.restaurant.total}">Total: </span><span id="total"></span></h5>
+            <form method="post" th:action="@{/api/customer/order}" th:object="${foodList}">
+                <input type="text" name="restaurantUsername" th:value="${restaurant.username}"
+                       field="restaurantUsername"
+                       hidden>
+                <input type="text" name="restaurantName" th:value="${restaurant.name}" field="restaurantName"
+                       hidden>
+                <table class="table table-striped table-info table-hover align-middle"
+                       style="width:100%">
+                    <thead>
+                    <tr>
+                        <th th:utext="#{customer.restaurant.order-food-id}">Food ID</th>
+                        <th th:utext="#{customer.restaurant.order-food-name}">Food name</th>
+                        <th th:utext="#{customer.restaurant.order-price}">Price</th>
+                        <th th:utext="#{customer.restaurant.order-quantity}">Quantity</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="food-rows"></tbody>
+                </table>
+                <div class="mt-5">
+                    <button type="submit" class="btn btn-warning" th:utext="#{customer.restaurant.submit}">Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="mt-5">
+            <a href="/api/customer" type="button" class="btn btn-secondary"
+               th:utext="#{customer.restaurant.back}">Back</a>
+        </div>
+    </main>
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+
+        /*$(document).ready(function () {
+            $('#example2').DataTable();
+        });*/
+
+        function removeRow(that) {
+            $(that.parentNode.parentNode).remove();
+            $('#example2').DataTable();
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let prices = $('#food-rows').find('.price');
+            let quantities = $('#food-rows').find('.quantity');
+            let total = 0;
+            for (let i = 0; i < prices.length; i++) {
+                total += prices[i].lastElementChild.innerHTML * quantities[i].lastElementChild.innerHTML;
+            }
+            $("#total").text(total.toLocaleString('en-US'));
+        }
+
+        function getAllId() {
+            let rowsid = []
+            let rows = $('#food-rows').find('tr');
+            for (let i = 0; i < rows.length; i++) {
+                rowsid.push(rows[i].id);
+            }
+            return rowsid;
+        }
+
+        function addRow(id, foodName, price) {
+            return `<tr id="${id}">
+                        <td class="id">
+                            <input type="text" name="foodIdList" id="${id}" field="foodIdList" value="${id}" hidden>
+                            <span>${id}</span>
+                        </td>
+                        <td class="name">
+                            <input type="text" name="foodNameList" value="${foodName}" field="foodNameList" hidden>
+                            <span>${foodName}</span>
+                        </td>
+                        <td class="price">
+                            <input type="text" name="priceList" value="${price}" field="priceList" hidden>
+                            <span>${price}</span>
+                        </td>
+                        <td class="quantity">
+                            <input type="text" name="quantityList" value="1" field="quantityList" hidden>
+                            <span>1</span>
+                        </td>
+                        <td>
+                            <a id="${id}" class="btn btn-danger" onclick="removeRow(this)">Remove</a>
+                        </td>
+                    </tr>`;
+        }
+
+        function updateOrder(id, foodName, price) {
+            let rowsid = getAllId();
+            let quantities = $('#food-rows').find('.quantity');
+            let isNeedToAddNewRow = true;
+            for (let i = 0; i < rowsid.length; i++) {
+                if (id === rowsid[i]) {
+                    quantities[i].lastElementChild.innerHTML++;
+                    $(quantities[i].firstElementChild).attr("value", quantities[i].lastElementChild.innerHTML);
+                    isNeedToAddNewRow = false;
+                    break;
+                }
+            }
+            if (isNeedToAddNewRow) {
+                $('#food-rows').append(addRow(id, foodName, price));
+            }
+            updateTotal();
+        }
+
+        function addToOrder(that) {
+            let row = that.parentNode.parentNode;
+            updateOrder(
+                $(row).find('.food-id')[0].innerHTML,
+                $(row).find('.food-name')[0].innerHTML,
+                $(row).find('.price')[0].innerHTML
+            )
+        }
+
+
+
+
+
+</script>
+</body>
+
+</html>

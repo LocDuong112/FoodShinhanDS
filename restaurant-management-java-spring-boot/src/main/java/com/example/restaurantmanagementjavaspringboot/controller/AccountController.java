@@ -5,14 +5,22 @@ import com.example.restaurantmanagementjavaspringboot.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 @RequestMapping("/api/")
 public class AccountController {
 
     @Autowired
     private AccountService accountService;
+
+    @GetMapping("")
+    public String homepage(Model model) {
+        return "login-form";
+    }
 
     @PutMapping("updateAccount/{id}")
     public ResponseEntity<AccountDto> updateAccount(@PathVariable("id") Long id, @RequestBody AccountDto accountDto) {
@@ -29,16 +37,20 @@ public class AccountController {
         }
     }
 
-    @GetMapping("signIn")
-    public ResponseEntity<AccountDto> signIn(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
+    @PostMapping("signIn")
+    public String signIn(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password, Model model) {
         try {
             AccountDto signInAccount = accountService.signIn(email, password);
             if (signInAccount == null) {
-                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+                model.addAttribute("email", email);
+                model.addAttribute("password", "");
+                return "login-form";
             }
-            return new ResponseEntity<>(signInAccount, HttpStatus.OK);
+            return null;
+//            return new ResponseEntity<>(signInAccount, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return null;
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

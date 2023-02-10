@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:utext="#{restaurant.create-food.title}">Restaurant - Add Food</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="?lang=en" th:utext="#{lang.en}">English</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?lang=vi" th:utext="#{lang.vi}">Vietnamese</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container mt-5">
+    <h1 th:utext="#{restaurant.create-food.header}">Restaurant - Add Food</h1>
+    <form th:method="POST" th:action="@{/api/restaurant/food}" th:object="${food}">
+        <!--<div class="mb-3 mt-3" hidden>
+            <label for="id" class="form-label">Food ID:</label>
+            <input type="text" class="form-control" id="id" placeholder="Enter id" name="id"
+                   th:field="*{id}" th:value="*{id}" required readonly disabled>
+        </div>-->
+        <div class="mb-3 mt-3">
+            <label for="name" class="form-label" th:utext="#{restaurant.create-food.name}">Food Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name"
+                   th:field="*{name}" required>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="price" class="form-label" th:utext="#{restaurant.create-food.price}">Food Price:</label>
+            <input type="text" class="form-control" id="price" placeholder="Enter price" name="price"
+                   th:field="*{price}" required>
+        </div>
+        <!--<div class="mb-3 mt-3" hidden>
+            <label for="quantity" class="form-label">Food quantity:</label>
+            <input type="text" class="form-control" id="quantity" placeholder="Enter quantity" name="quantity"
+                   th:field="*{quantity}" value="0" required readonly>
+        </div>-->
+        <div class="mb-3 mt-3">
+            <label for="imageLink" class="form-label" th:utext="#{restaurant.create-food.image-link}">Food Image
+                Link:</label>
+            <input type="text" class="form-control" id="imageLink" placeholder="Enter image link" name="imageLink"
+                   th:field="*{imageLink}">
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary" th:utext="#{restaurant.create-food.create}">Create</button>
+            <a href="/api/restaurant" type="button" class="btn btn-secondary ms-5"
+               th:utext="#{restaurant.create-food.cancel}">Cancel</a>
+        </div>
+    </form>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" th:id="${modalId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" th:utext="${modalContent}">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+        $(document).ready(function () {
+            $('#modal').modal('show');
+        });
+
+</script>
+
+</body>
+
+</html>

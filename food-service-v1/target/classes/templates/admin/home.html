@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:utext="#{admin.home.title}">Admin - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+    </script>
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="?lang=en" th:utext="#{lang.en}">English</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?lang=vi" th:utext="#{lang.vi}">Vietnamese</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container mt-5">
+    <h1 th:utext="#{admin.home.header}">Admin - Home</h1>
+    <div class="list-group mt-5">
+        <a href="/api/admin/admins" class="list-group-item list-group-item-action list-group-item-success"
+           th:utext="#{admin.home.manage-admin}">Manage
+            Admins</a>
+        <a href="/api/admin/customers" class="list-group-item list-group-item-action list-group-item-info"
+           th:utext="#{admin.home.manage-customer}">Manage
+            Customers</a>
+        <a href="/api/admin/restaurants" class="list-group-item list-group-item-action list-group-item-warning"
+           th:utext="#{admin.home.manage-restaurant}">Manage
+            Restaurants</a>
+    </div>
+    <div class="mt-5">
+        <a href="/api/admin/logout" type="button" class="btn btn-danger" th:utext="#{admin.home.logout}">Logout</a>
+    </div>
+</div>
+</body>
+
+</html>
