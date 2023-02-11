@@ -213,6 +213,22 @@ public class RestaurantController {
         return modelAndView;
     }
 
+    @GetMapping("/api/restaurant/chat")
+    public ModelAndView aiChatPage(Model model) {
+        if (model.getAttribute("username") == null) {
+            return new ModelAndView("redirect:/api/restaurant/login");
+        }
+
+        // Function here
+        //  ...
+        //
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("restaurant/ai-chat");
+
+        return modelAndView;
+    }
+
 
     /////////////////////////// Create //////////////////////////////
     @PostMapping("/api/restaurant/restaurant")

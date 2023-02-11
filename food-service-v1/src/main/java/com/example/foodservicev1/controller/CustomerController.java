@@ -224,6 +224,24 @@ public class CustomerController {
     }
 
 
+    @GetMapping("/api/customer/chat")
+    public ModelAndView aiChatPage(Model model) {
+        // Exit to login page if not login yet
+        if (model.getAttribute("customerEmail") == null) {
+            return new ModelAndView("redirect:/api/customer/login");
+        }
+
+        // Function here
+        //  ...
+        //
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("customer/ai-chat");
+
+        return modelAndView;
+    }
+
+
 
     /////////////////////////// Create //////////////////////////////
     @PostMapping("/api/customer/customer")
