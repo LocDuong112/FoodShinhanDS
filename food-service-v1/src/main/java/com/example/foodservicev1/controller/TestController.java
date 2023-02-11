@@ -1,6 +1,7 @@
 package com.example.foodservicev1.controller;
 
 import com.example.foodservicev1.entity.ServiceOrder;
+import com.example.foodservicev1.service.AIChatService;
 import com.example.foodservicev1.service.OrderFoodService;
 import com.example.foodservicev1.service.ServiceOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class TestController {
     @Autowired
     private OrderFoodService orderFoodService;
 
+    @Autowired
+    private AIChatService aiChatService;
+
     @PostMapping("/api/test/order")
     public int saveOrder(@RequestBody ServiceOrder serviceOrder) {
         return serviceOrderService.save(serviceOrder);
@@ -25,6 +29,11 @@ public class TestController {
     public List<ServiceOrder> saveOrder(@PathVariable String restaurantUsername) {
         System.out.println(serviceOrderService.findByRestaurantUsername(restaurantUsername).get(0));
         return serviceOrderService.findByRestaurantUsername(restaurantUsername);
+    }
+
+    @GetMapping("/api/customer/chat/request2")
+    public String aIChatResponse2() {
+        return aiChatService.chatResponse("How can I learn Spring Boot");
     }
 
     /*@PostMapping("/api/customer/order")

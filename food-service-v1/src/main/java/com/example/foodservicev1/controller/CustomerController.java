@@ -11,11 +11,14 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @RequestMapping("")
-@SessionAttributes({"saveResponse", "updateResponse", "deleteResponse", "loginResponse", "customerEmail"})
+@SessionAttributes({"saveResponse", "updateResponse", "deleteResponse", "loginResponse", "customerEmail", "messageList"})
 @Controller
 public class CustomerController {
 
@@ -36,6 +39,9 @@ public class CustomerController {
 
     @Autowired
     private OrderDetailService orderDetailService;
+
+    @Autowired
+    private AIChatService aiChatService;
 
     /////////////////////////// Homepage //////////////////////////////
     @GetMapping("/api/customer")
@@ -69,7 +75,6 @@ public class CustomerController {
     public ModelAndView loginPage(Model model) {
 
 
-
         String modalContent = "Login successfully";
         String modalId = "modal";
 
@@ -98,7 +103,6 @@ public class CustomerController {
         modelAndView.setViewName("customer/login");
 
         model.addAttribute("loginResponse", null);
-
 
 
         return modelAndView;
@@ -231,16 +235,17 @@ public class CustomerController {
             return new ModelAndView("redirect:/api/customer/login");
         }
 
-        // Function here
-        //  ...
-        //
+        List<Message> messageList = new ArrayList<Message>();
+        if (model.getAttribute("messageList") != null) {
+            messageList = (List<Message>)model.getAttribute("messageList");
+        }
+        model.addAttribute("messageList", messageList);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("customer/ai-chat");
 
         return modelAndView;
     }
-
 
 
     /////////////////////////// Create //////////////////////////////
@@ -280,6 +285,28 @@ public class CustomerController {
         return new ModelAndView("redirect:/api/customer/order-confirm/" + uniqueID);
     }
 
+    @PostMapping("/api/customer/chat/request")
+    public ModelAndView aIChatResponse(Model model, @RequestParam String request) {
+        List<Message> messageList = new ArrayList<Message>();
+        if (model.getAttribute("messageList") != null) {
+            messageList = (List<Message>)model.getAttribute("messageList");
+        }
+
+        Timestamp requestTime = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm | MMMM dd");
+        String response = aiChatService.chatResponse(request);
+        Timestamp responseTime = new Timestamp(System.currentTimeMillis());
+
+        messageList.add(new Message(request, response, sdf.format(requestTime), sdf.format(responseTime)));
+
+        // Add to session model attribute
+        model.addAttribute("messageList", messageList);
+
+        return new ModelAndView("redirect:/api/customer/chat");
+    }
+
+
+
 
     /////////////////////////// Update //////////////////////////////
     @PutMapping("/api/customer/customer")
@@ -291,7 +318,7 @@ public class CustomerController {
 
         model.addAttribute("customer", new Customer());
         model.addAttribute("updateResponse", customerService.update(customer));
-        return new ModelAndView("redirect:/api/customer/profile");
+        return new ModelAndView("redirect:/api/customer/ai-chat");
     }
 
 
