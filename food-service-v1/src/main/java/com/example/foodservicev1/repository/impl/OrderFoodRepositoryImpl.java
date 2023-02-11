@@ -19,7 +19,7 @@ public class OrderFoodRepositoryImpl implements OrderFoodRepository {
     @Override
     public List<OrderFood> findByOrderId(String orderId) {
         try {
-            return jdbcTemplate.query("SELECT * FROM ORDERFOOD WHERE OrderId = ?",
+            return jdbcTemplate.query("SELECT * FROM ORDER_FOOD WHERE Order_Id = ?",
                     new OrderFoodRowMapper(), orderId);
         } catch (Exception e) {
             return null;
@@ -29,7 +29,7 @@ public class OrderFoodRepositoryImpl implements OrderFoodRepository {
     @Override
     public int save(OrderFood orderFood) {
         try {
-            return jdbcTemplate.update("INSERT INTO ORDERFOOD ( OrderId, FoodId, FoodName, Quantity, Price )" +
+            return jdbcTemplate.update("INSERT INTO ORDER_FOOD ( Order_Id, Food_Id, Food_Name, Quantity, Price )" +
                             "VALUES ( ?, ?, ?, ?, ? )",
                     new Object[]{orderFood.getOrderId(), orderFood.getFoodId(),
                             orderFood.getFoodName(), orderFood.getQuantity(), orderFood.getPrice()});
@@ -41,7 +41,7 @@ public class OrderFoodRepositoryImpl implements OrderFoodRepository {
     @Override
     public int deleteByOrderId(String orderId) {
         try {
-            return jdbcTemplate.update("DELETE FROM FOOD WHERE OrderId = ?", orderId);
+            return jdbcTemplate.update("DELETE FROM FOOD WHERE Order_Id = ?", orderId);
         } catch (Exception e) {
             return 0;
         }

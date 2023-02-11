@@ -18,7 +18,7 @@ public class ServiceOrderRepositoryImpl implements ServiceOrderRepository {
     @Override
     public List<ServiceOrder> find() {
         try {
-            return jdbcTemplate.query("SELECT * FROM SERVICEORDER", new ServiceOrderRowMapper());
+            return jdbcTemplate.query("SELECT * FROM SERVICE_ORDER", new ServiceOrderRowMapper());
         } catch (Exception e) {
             return null;
         }
@@ -27,7 +27,7 @@ public class ServiceOrderRepositoryImpl implements ServiceOrderRepository {
     @Override
     public List<ServiceOrder> findByRestaurantUsername(String restaurantUsername) {
         try {
-            return jdbcTemplate.query("SELECT * FROM SERVICEORDER WHERE RestaurantUsername = ?",
+            return jdbcTemplate.query("SELECT * FROM SERVICE_ORDER WHERE Restaurant_Username = ?",
                     new ServiceOrderRowMapper(), restaurantUsername);
         } catch (Exception e) {
             return null;
@@ -37,7 +37,7 @@ public class ServiceOrderRepositoryImpl implements ServiceOrderRepository {
     @Override
     public List<ServiceOrder> findByCustomerEmail(String customerEmail) {
         try {
-            return jdbcTemplate.query("SELECT * FROM SERVICEORDER WHERE CustomerEmail = ?",
+            return jdbcTemplate.query("SELECT * FROM SERVICE_ORDER WHERE Customer_Email = ?",
                     new ServiceOrderRowMapper(), customerEmail);
         } catch (Exception e) {
             return null;
@@ -47,7 +47,7 @@ public class ServiceOrderRepositoryImpl implements ServiceOrderRepository {
     @Override
     public ServiceOrder findById(String id) {
         try {
-            return jdbcTemplate.queryForObject("SELECT * FROM SERVICEORDER WHERE Id = ?", new ServiceOrderRowMapper(), id);
+            return jdbcTemplate.queryForObject("SELECT * FROM SERVICE_ORDER WHERE Id = ?", new ServiceOrderRowMapper(), id);
         } catch (Exception e) {
             return null;
         }
@@ -57,7 +57,7 @@ public class ServiceOrderRepositoryImpl implements ServiceOrderRepository {
     public int save(ServiceOrder serviceOrder) {
         try {
             return jdbcTemplate.update(
-                    "INSERT INTO SERVICEORDER ( Id, RestaurantUsername, RestaurantName, CustomerEmail, CreatedDate )" +
+                    "INSERT INTO SERVICE_ORDER ( Id, Restaurant_Username, Restaurant_Name, Customer_Email, Created_Date )" +
                             "VALUES ( ?, ?, ?, ?, CURRENT_DATE )",
                     new Object[]{serviceOrder.getId(), serviceOrder.getRestaurantUsername(),
                             serviceOrder.getRestaurantName(), serviceOrder.getCustomerEmail()});
@@ -74,7 +74,7 @@ public class ServiceOrderRepositoryImpl implements ServiceOrderRepository {
     @Override
     public int delete(String id) {
         try {
-            return jdbcTemplate.update("DELETE FROM SERVICEORDER WHERE Id = ?", id);
+            return jdbcTemplate.update("DELETE FROM SERVICE_ORDER WHERE Id = ?", id);
         } catch (Exception e) {
             return 0;
         }

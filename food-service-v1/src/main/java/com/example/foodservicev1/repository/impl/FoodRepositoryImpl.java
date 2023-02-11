@@ -18,7 +18,7 @@ public class FoodRepositoryImpl implements FoodRepository {
     @Override
     public List<Food> findByRestaurantUsername(String restaurantUsername) {
         try {
-            return jdbcTemplate.query("SELECT * FROM FOOD WHERE RestaurantUsername = ?",
+            return jdbcTemplate.query("SELECT * FROM FOOD WHERE Restaurant_Username = ?",
                     new FoodRowMapper(), restaurantUsername);
         } catch (Exception e) {
             return null;
@@ -37,7 +37,7 @@ public class FoodRepositoryImpl implements FoodRepository {
     @Override
     public int save(Food food) {
         try {
-            return jdbcTemplate.update("INSERT INTO FOOD ( Id, RestaurantUsername, Name, Price, ImageLink )" +
+            return jdbcTemplate.update("INSERT INTO FOOD ( Id, Restaurant_Username, Name, Price, Image_Link )" +
                             "VALUES ( ?, ?, ?, ?, ? )",
                     new Object[]{food.getId(), food.getRestaurantUsername(), food.getName(),
                                 food.getPrice(), food.getImageLink()});
@@ -50,7 +50,7 @@ public class FoodRepositoryImpl implements FoodRepository {
     public int update(Food food) {
         try {
             return jdbcTemplate.update("UPDATE FOOD SET " +
-                            "Name = ?, Price = ?, ImageLink = ? WHERE Id = ?",
+                            "Name = ?, Price = ?, Image_Link = ? WHERE Id = ?",
                     new Object[]{food.getName(), food.getPrice(), food.getImageLink(), food.getId()});
         } catch (Exception e) {
             return 0;
@@ -69,7 +69,7 @@ public class FoodRepositoryImpl implements FoodRepository {
     @Override
     public int deleteByRestaurantUsername(String restaurantUsername) {
         try {
-            return jdbcTemplate.update("DELETE FROM FOOD WHERE RestaurantUsername = ?", restaurantUsername);
+            return jdbcTemplate.update("DELETE FROM FOOD WHERE Restaurant_Username = ?", restaurantUsername);
         } catch (Exception e) {
             return 0;
         }

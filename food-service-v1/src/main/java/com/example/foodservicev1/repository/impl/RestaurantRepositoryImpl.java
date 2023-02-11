@@ -34,7 +34,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     @Override
     public int save(Restaurant restaurant) {
         try {
-            return jdbcTemplate.update("INSERT INTO RESTAURANT ( Username, Name, Email, Password, ImageLink, Address )" +
+            return jdbcTemplate.update("INSERT INTO RESTAURANT ( Username, Name, Email, Password, Image_Link, Address )" +
                             "VALUES ( ?, ?, ?, ?, ?, ? )",
                     new Object[]{restaurant.getUsername(), restaurant.getName(), restaurant.getEmail(),
                             restaurant.getPassword(), restaurant.getImageLink(), restaurant.getAddress()});
@@ -47,7 +47,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     public int update(Restaurant restaurant) {
         try {
             return jdbcTemplate.update("UPDATE RESTAURANT SET " +
-                            "Name = ?, Password = ?, ImageLink = ?, Address = ? WHERE Username = ?",
+                            "Name = ?, Password = ?, Image_Link = ?, Address = ? WHERE Username = ?",
                     new Object[]{restaurant.getName(), restaurant.getPassword(),
                             restaurant.getImageLink(), restaurant.getAddress(), restaurant.getUsername()});
         } catch (Exception e) {

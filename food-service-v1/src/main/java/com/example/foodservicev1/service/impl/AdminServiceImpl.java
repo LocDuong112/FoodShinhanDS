@@ -2,6 +2,7 @@ package com.example.foodservicev1.service.impl;
 
 import com.example.foodservicev1.entity.Admin;
 import com.example.foodservicev1.repository.AdminRepository;
+import com.example.foodservicev1.repository.JPAAdminRepository;
 import com.example.foodservicev1.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,12 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminRepository adminRepository;
 
+    @Autowired
+    private JPAAdminRepository jpaAdminRepository;
+
     @Override
     public List<Admin> findAll() {
-        return adminRepository.findAll();
+        return jpaAdminRepository.findAll();
     }
 
     @Override

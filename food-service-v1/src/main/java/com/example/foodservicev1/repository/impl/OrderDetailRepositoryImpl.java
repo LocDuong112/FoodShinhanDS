@@ -18,17 +18,17 @@ public class OrderDetailRepositoryImpl implements OrderDetailRepository {
     @Override
     public List<OrderDetailDto> findByOrderId(String orderId) {
         try {
-            return jdbcTemplate.query("SELECT\n" +
-                            "\tSERVICEORDER.Id,\n" +
-                            "\tSERVICEORDER.RestaurantName,\n" +
-                            "\tSERVICEORDER.CustomerEmail,\n" +
-                            "\tORDERFOOD.FoodName,\n" +
-                            "\tORDERFOOD.Price,\n" +
-                            "\tORDERFOOD.Quantity,\n" +
-                            "\tSERVICEORDER.CreatedDate\n" +
-                            "FROM ORDERFOOD\n" +
-                            "\tJOIN SERVICEORDER ON SERVICEORDER.Id = ORDERFOOD.OrderId\n" +
-                            "WHERE ORDERFOOD.OrderId = ?",
+            return jdbcTemplate.query("SELECT " +
+                            "  SERVICE_ORDER.Id, " +
+                            "  SERVICE_ORDER.Restaurant_Name, " +
+                            "  SERVICE_ORDER.Customer_Email, " +
+                            " ORDER_FOOD.Food_Name, " +
+                            " ORDER_FOOD.Price, " +
+                            " ORDER_FOOD.Quantity, " +
+                            "  SERVICE_ORDER.Created_Date " +
+                            "FROM ORDER_FOOD " +
+                            " JOIN  SERVICE_ORDER ON  SERVICE_ORDER.Id = ORDER_FOOD.Order_Id " +
+                            "WHERE ORDER_FOOD.Order_Id = ?",
                     new OrderDetailDtoMapper(), orderId);
         } catch (Exception e) {
             return null;
@@ -38,17 +38,17 @@ public class OrderDetailRepositoryImpl implements OrderDetailRepository {
     @Override
     public List<OrderDetailDto> findByRestaurantUsername(String restaurantUsername) {
         try {
-            return jdbcTemplate.query("SELECT\n" +
-                            "\tSERVICEORDER.Id,\n" +
-                            "\tSERVICEORDER.RestaurantName,\n" +
-                            "\tSERVICEORDER.CustomerEmail,\n" +
-                            "\tORDERFOOD.FoodName,\n" +
-                            "\tORDERFOOD.Price,\n" +
-                            "\tORDERFOOD.Quantity,\n" +
-                            "\tSERVICEORDER.CreatedDate\n" +
-                            "FROM ORDERFOOD\n" +
-                            "\tJOIN SERVICEORDER ON SERVICEORDER.Id = ORDERFOOD.OrderId\n" +
-                            "WHERE SERVICEORDER.RestaurantUsername = ?",
+            return jdbcTemplate.query("SELECT " +
+                            "  SERVICE_ORDER.Id, " +
+                            "  SERVICE_ORDER.Restaurant_Name, " +
+                            "  SERVICE_ORDER.Customer_Email, " +
+                            " ORDER_FOOD.Food_Name, " +
+                            " ORDER_FOOD.Price, " +
+                            " ORDER_FOOD.Quantity, " +
+                            "  SERVICE_ORDER.Created_Date " +
+                            "FROM ORDER_FOOD " +
+                            " JOIN  SERVICE_ORDER ON  SERVICE_ORDER.Id = ORDER_FOOD.Order_Id " +
+                            "WHERE  SERVICE_ORDER.Restaurant_Username = ?",
                     new OrderDetailDtoMapper(), restaurantUsername);
         } catch (Exception e) {
             return null;
@@ -58,17 +58,17 @@ public class OrderDetailRepositoryImpl implements OrderDetailRepository {
     @Override
     public List<OrderDetailDto> findByCustomerEmail(String customerEmail) {
         try {
-            return jdbcTemplate.query("SELECT\n" +
-                            "\tSERVICEORDER.Id,\n" +
-                            "\tSERVICEORDER.RestaurantName,\n" +
-                            "\tSERVICEORDER.CustomerEmail,\n" +
-                            "\tORDERFOOD.FoodName,\n" +
-                            "\tORDERFOOD.Price,\n" +
-                            "\tORDERFOOD.Quantity,\n" +
-                            "\tSERVICEORDER.CreatedDate\n" +
-                            "FROM ORDERFOOD\n" +
-                            "\tJOIN SERVICEORDER ON SERVICEORDER.Id = ORDERFOOD.OrderId\n" +
-                            "WHERE SERVICEORDER.CustomerEmail = ?",
+            return jdbcTemplate.query("SELECT " +
+                            "  SERVICE_ORDER.Id, " +
+                            "  SERVICE_ORDER.Restaurant_Name, " +
+                            "  SERVICE_ORDER.Customer_Email, " +
+                            " ORDER_FOOD.Food_Name, " +
+                            " ORDER_FOOD.Price, " +
+                            " ORDER_FOOD.Quantity, " +
+                            "  SERVICE_ORDER.Created_Date " +
+                            "FROM ORDER_FOOD " +
+                            " JOIN  SERVICE_ORDER ON  SERVICE_ORDER.Id = ORDER_FOOD.Order_Id " +
+                            "WHERE  SERVICE_ORDER.Customer_Email = ?",
                     new OrderDetailDtoMapper(), customerEmail);
         } catch (Exception e) {
             return null;
