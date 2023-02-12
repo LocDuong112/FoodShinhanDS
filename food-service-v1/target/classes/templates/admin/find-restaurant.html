@@ -40,6 +40,7 @@
             <tr>
                 <th th:utext="#{find-restaurant.id}">Restaurant ID</th>
                 <th th:utext="#{find-restaurant.name}">Restaurant name</th>
+                <th >Image</th>
                 <th th:utext="#{find-restaurant.email}">Email</th>
                 <th th:utext="#{find-restaurant.password}">Password</th>
                 <!--<th>Image Link</th>-->
@@ -51,6 +52,9 @@
             <tr th:each="restaurant: ${restaurants}">
                 <td th:utext="${restaurant.username}"></td>
                 <td th:utext="${restaurant.name}"></td>
+                <td>
+                    <img style="width: 70px; height: 70px; border-radius: 20px " th:src="${restaurant.imageLink}">
+                </td>
                 <td th:utext="${restaurant.email}"></td>
                 <td th:utext="${restaurant.password}"></td>
                 <!--<td th:utext="${restaurant.imageLink}"></td>-->

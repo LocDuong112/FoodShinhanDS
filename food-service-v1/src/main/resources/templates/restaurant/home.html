@@ -84,8 +84,7 @@
                     <td th:utext="${food.price}"></td>
                     <!--<td th:utext="${food.quantity}"></td>-->
                     <td>
-                        <a th:href="${food.imageLink}|" target="_blank" class="btn btn-success"
-                           th:utext="#{restaurant.home.image}">Image</a>
+                        <img style="width: 70px; height: 70px; border-radius: 20px " th:src="${food.imageLink}">
                     </td>
                     <td>
                         <a th:href="@{|/api/restaurant/update-food/${food.id}|}"

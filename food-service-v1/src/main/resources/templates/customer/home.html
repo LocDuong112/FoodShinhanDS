@@ -81,8 +81,7 @@
                     <td th:utext="${restaurant.name}"></td>
                     <td th:utext="${restaurant.email}"></td>
                     <td>
-                        <a th:href="${restaurant.imageLink}|" target="_blank" class="btn btn-success"
-                           th:utext="#{customer.home.image}">Image</a>
+                        <img style="height: 70px;width: 70px; border-radius: 20px " th:src="${restaurant.imageLink}">
                     </td>
                     <td th:utext="${restaurant.address}"></td>
                     <td>
