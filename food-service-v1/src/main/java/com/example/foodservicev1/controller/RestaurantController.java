@@ -1,13 +1,7 @@
 package com.example.foodservicev1.controller;
 
-import com.example.foodservicev1.entity.Admin;
-import com.example.foodservicev1.entity.Customer;
-import com.example.foodservicev1.entity.Food;
-import com.example.foodservicev1.entity.Restaurant;
-import com.example.foodservicev1.service.FoodService;
-import com.example.foodservicev1.service.OrderDetailService;
-import com.example.foodservicev1.service.RestaurantService;
-import com.example.foodservicev1.service.ServiceOrderService;
+import com.example.foodservicev1.entity.*;
+import com.example.foodservicev1.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +10,13 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
-@SessionAttributes({"saveResponse", "updateResponse", "deleteResponse", "loginResponse", "username"})
+@SessionAttributes({"saveResponse", "updateResponse", "deleteResponse", "loginResponse", "username",
+        "restaurantMessageList"})
 @Controller
 public class RestaurantController {
 
@@ -32,6 +31,9 @@ public class RestaurantController {
 
     @Autowired
     private OrderDetailService orderDetailService;
+
+    @Autowired
+    private AIChatService aiChatService;
 
     /////////////////////////// Homepage //////////////////////////////
     @GetMapping("/api/restaurant")
@@ -219,9 +221,11 @@ public class RestaurantController {
             return new ModelAndView("redirect:/api/restaurant/login");
         }
 
-        // Function here
-        //  ...
-        //
+        List<Message> messageList = new ArrayList<Message>();
+        if (model.getAttribute("restaurantMessageList") != null) {
+            messageList = (List<Message>)model.getAttribute("restaurantMessageList");
+        }
+        model.addAttribute("restaurantMessageList", messageList);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("restaurant/ai-chat");
@@ -248,6 +252,26 @@ public class RestaurantController {
         food.setRestaurantUsername((String)model.getAttribute("username"));
         model.addAttribute("saveResponse", foodService.save(food));
         return new ModelAndView("redirect:/api/restaurant/create-food");
+    }
+
+    @PostMapping("/api/restaurant/chat/request")
+    public ModelAndView restaurantAIChatResponse(Model model, @RequestParam String request) {
+        List<Message> messageList = new ArrayList<Message>();
+        if (model.getAttribute("restaurantMessageList") != null) {
+            messageList = (List<Message>)model.getAttribute("restaurantMessageList");
+        }
+
+        Timestamp requestTime = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm | MMMM dd");
+        String response = aiChatService.chatResponse(request);
+        Timestamp responseTime = new Timestamp(System.currentTimeMillis());
+
+        messageList.add(new Message(request, response, sdf.format(requestTime), sdf.format(responseTime)));
+
+        // Add to session model attribute
+        model.addAttribute("restaurantMessageList", messageList);
+
+        return new ModelAndView("redirect:/api/restaurant/chat");
     }
 
 

@@ -51,6 +51,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- ChatGPT -->
+		<dependency>
+			<groupId>io.github.flashvayne</groupId>
+			<artifactId>chatgpt-spring-boot-starter</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
