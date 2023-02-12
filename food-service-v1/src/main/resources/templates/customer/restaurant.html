@@ -83,7 +83,7 @@
                     <td th:utext="${food.name}" class="food-name"></td>
                     <td th:utext="${food.price}" class="price"></td>
                     <td>
-                        <a th:href="${food.imageLink}" target="_blank" class="btn btn-info">Image</a>
+                        <img style="height: 70px;width: 70px; border-radius: 20px " th:src="${food.imageLink}">
                     </td>
                     <td>
                         <a onclick="addToOrder(this)" class="btn btn-success" th:utext="#{customer.restaurant.order}">Order</a>
