@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -39,6 +40,10 @@ public class OrderServiceImpl implements OrderService {
         order = orderRepository.save(order);
         return orderMapper.entityToDto(order);
     }
-
+    @Override
+    public OrderDto findById(long id) {
+        Order _order = orderRepository.findById(id).orElse(null);
+        return orderMapper.entityToDto(_order);
+    }
 
 }
