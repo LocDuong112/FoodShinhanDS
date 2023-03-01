@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="sidebar  has-scrollbar" data-mobile-menu th:fragment="sidebar">
+
+        <div class="product-showcase">
+
+            <h3 class="showcase-heading">best sellers</h3>
+
+            <div class="showcase-wrapper">
+
+                <div class="showcase-container">
+
+                    <div th:replace="fragments/product-home/sidebar/showcase :: showcase"></div>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

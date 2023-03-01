@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="showcase-container" th:fragment="showcase-container" th:each="food: ${foods}">
+
+        <div class="showcase">
+
+            <div class="showcase-banner">
+                <img th:src="${food.imageLink}" th:alt="${food.name}" class="showcase-img">
+            </div>
+
+            <div class="showcase-content">
+
+                <a href="#">
+                    <h3 class="showcase-title" th:utext="${food.name}"></h3>
+                </a>
+
+                <p class="showcase-desc" th:utext="${food.restaurantUsername}"></p>
+
+                <div class="price-box">
+                    <p class="price" th:utext="${food.price}"></p>
+                </div>
+
+                <button class="add-cart-btn">Add to cart</button>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

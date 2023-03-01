@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="showcase" th:fragment="showcase" th:each="food: ${foods}">
+
+        <div class="showcase-banner">
+            <div style="height:200px">
+                <img th:src="${food.imageLink}" th:alt="${food.name}" width="300" class="product-img default">
+            </div>
+
+            <img th:src="${food.imageLink}" th:alt="${food.name}" width="300" class="product-img hover">
+
+            <div class="showcase-actions">
+
+                <button class="btn-action">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </button>
+
+                <button class="btn-action">
+                    <ion-icon name="bag-add-outline"></ion-icon>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="showcase-content">
+
+            <a href="#" class="showcase-category" th:utext="${food.name}">Mens Winter Leathers Jackets</a>
+
+            <a href="#">
+                <h3 class="showcase-title" th:utext="${food.restaurantUsername}">Restaurant 1</h3>
+            </a>
+
+            <div class="price-box">
+                <p class="price" th:utext="${food.price}">$48.00</p>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

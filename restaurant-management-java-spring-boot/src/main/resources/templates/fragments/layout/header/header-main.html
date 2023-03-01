@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="header-main" th:fragment="header-main">
+
+        <div class="container">
+
+            <a href="#" class="header-logo">
+                <img th:src="@{/img/sample/logo/logo.svg}" alt="Anon's logo" width="120" height="36">
+            </a>
+
+            <div class="header-search-container">
+
+                <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
+
+                <button class="search-btn">
+                    <ion-icon name="search-outline"></ion-icon>
+                </button>
+
+            </div>
+
+            <div class="header-user-actions">
+
+                <button class="action-btn">
+                    <ion-icon name="person-outline"></ion-icon>
+                </button>
+
+
+                <button class="action-btn">
+                    <ion-icon name="bag-handle-outline"></ion-icon>
+                    <span class="count">0</span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

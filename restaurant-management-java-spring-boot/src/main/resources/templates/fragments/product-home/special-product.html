@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="product-featured" th:fragment="special-product">
+
+        <h2 class="title">Special Dishes</h2>
+
+        <div class="showcase-wrapper has-scrollbar">
+
+            <div th:replace="fragments/product-home/special-product/showcase-container :: showcase-container"></div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

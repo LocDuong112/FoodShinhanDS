@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="product-main" th:fragment="product-main">
+
+        <h2 class="title">Dishes</h2>
+
+        <div class="product-grid">
+
+            <div th:replace="fragments/product-home/product-main/showcase :: showcase"></div>
+            
+        </div>
+
+    </div>
+</body>
+
+</html>

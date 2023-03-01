@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <footer th:fragment="footer">
+
+        <div th:replace="fragments/layout/footer/footer-nav :: footer-nav"></div>
+        <div th:replace="fragments/layout/footer/footer-bottom :: footer-bottom"></div>
+
+    </footer>
+</body>
+
+</html>

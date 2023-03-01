@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="product-container" th:fragment="product-home">
+
+        <div class="container">
+
+            <!-- SIDEBAR -->
+            <div th:replace="fragments/product-home/sidebar :: sidebar"></div>
+
+            <div class="product-box">
+
+                <!-- PRODUCT FEATURED -->
+                <div th:replace="fragments/product-home/special-product :: special-product"></div>
+
+                <!-- PRODUCT GRID -->
+                <div th:replace="fragments/product-home/product-main :: product-main"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
